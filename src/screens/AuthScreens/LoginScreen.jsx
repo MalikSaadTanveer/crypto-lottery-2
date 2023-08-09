@@ -25,7 +25,9 @@ const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
-  
+  const handleForgetPassword = () =>{
+    navigation.navigate(navigationString.ForgetPasswordEmail)
+  }
 
   const handleScreen = ()=>{
     navigation.navigate(navigationString.SignupScreen)
@@ -41,7 +43,7 @@ const LoginScreen = ({ navigation }) => {
       Toast.show({ type: "error", text1: "Error:", text2: "Password should be 8 characters..."});
       return
     }
-    console.log("Hello")
+    
     setLoader(true)
     try {
       
@@ -81,6 +83,7 @@ const LoginScreen = ({ navigation }) => {
             icon={emailIcon}
             value={email}
             onChangeText={setEmail}
+            type="email-address"
           />
           <InputComponent
             placeholder="Password"
@@ -90,7 +93,9 @@ const LoginScreen = ({ navigation }) => {
             onChangeText={setPassword}
           />
 
-          <TouchableOpacity style={styles.forgetPasswordContainer}>
+          <TouchableOpacity style={styles.forgetPasswordContainer} 
+            onPress={handleForgetPassword}
+          >
             <Text style={styles.forgetPassword}>Forgot Password?</Text>
           </TouchableOpacity>
           <ButtonComponent
@@ -100,7 +105,7 @@ const LoginScreen = ({ navigation }) => {
           />
 
           <View style={styles.bottom} >
-            <Text>Don’t have account?</Text>
+            <Text style={{color:colors.light}}>Don’t have account?</Text>
             <TouchableOpacity style={styles.bottomButtonContainer}
               onPress={handleScreen}>
               <Text style={styles.bottomButton}>Sign Up</Text>

@@ -3,7 +3,7 @@ import React from 'react'
 import { colors } from '../utils/colors'
 import fonts from '../utils/fonts'
 
-const InputComponent = ({ placeholder, icon, security, value, onChangeText,type }) => {
+const InputComponent = ({ placeholder, icon, security, value, onChangeText,type, max }) => {
     return (
         <View style={styles.textInputContainer}>
             <Image source={icon} style={styles.icon}  resizeMode='contain'/>
@@ -16,6 +16,7 @@ const InputComponent = ({ placeholder, icon, security, value, onChangeText,type 
                 selectionColor={colors.light}
                 secureTextEntry={security || false}
                 keyboardType={type}
+                maxLength={max}
             />
 
         </View>

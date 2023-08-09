@@ -94,7 +94,7 @@ const ResultScreen = ({ navigation, route }) => {
       }
 
     } catch (error) {
-      console.log(error)
+      
       setLoader(false)
       Toast.show({ type: "error", text1: "Error:", text2: "Something went wrong in updating data..." });
 
@@ -122,7 +122,7 @@ const ResultScreen = ({ navigation, route }) => {
       }
 
     } catch (error) {
-      console.log(error)
+      
       setLoader(false)
       Toast.show({ type: "error", text1: "Error:", text2: "Something went wrong in updating data..." });
 

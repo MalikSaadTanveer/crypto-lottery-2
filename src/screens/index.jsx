@@ -1,5 +1,8 @@
 export {default as SplashScreen} from './AuthScreens/SplashScreen';
 export {default as LoginScreen} from './AuthScreens/LoginScreen';
+export {default as ForgetPasswordEmail} from './AuthScreens/ForgetPasswordEmail';
+export {default as ForgetPasswordOTP} from './AuthScreens/ForgetPasswordOTP';
+export {default as NewPasswords} from './AuthScreens/NewPasswords';
 export {default as SignupScreen} from './AuthScreens/SignupScreen';
 export {default as HomeScreen} from './HomeScreens/HomeScreen';
 export {default as GuideScreen} from './HomeScreens/GuideScreen';

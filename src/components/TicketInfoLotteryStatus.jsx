@@ -4,7 +4,7 @@ import { colors } from '../utils/colors'
 import fonts from '../utils/fonts'
 
 const TicketInfoLotteryStatus = ({userData, currentTickets, previousTickets, sessionId, endTime}) => {
-  // console.log("userData",userData)
+ 
   // const data = [
   //   {
   //     matchType: 'Ticket #120',
@@ -72,9 +72,6 @@ const TicketInfoLotteryStatus = ({userData, currentTickets, previousTickets, ses
     return `${month} ${day}, ${year}, ${hours}:${minutes.toString().padStart(2, '0')} ${meridiem}`;
   }
   
-  // const inputTime = "2023-07-26T00:00:00.000+00:00";
-  // const formattedDate = convertToFormattedDate(inputTime);
-  // console.log(formattedDate); // Output: "Jul 26, 2023, 12:00 AM"
   
 
   return (

@@ -63,16 +63,16 @@ const HomeScreen = ({ navigation }) => {
 
   const getName = async () => {
     let name = await AsyncStorage.getItem('full_name')
-    console.log("Name",name)
+    
     setFull_name(name)
   }
 
   const getCurrentSession = async () => {
     try {
       const result = await axios.get(`${baseURL}/api/session/get_current_session`);
-      // console.log(result.status)
+      
       if (result.status == 200) {
-        // console.log(result?.data?.session[0])
+        
         setCurrentSession(result?.data?.session[0])
       }
       else {
@@ -90,7 +90,7 @@ const HomeScreen = ({ navigation }) => {
           text: "Ok",
         },
         ])
-      console.log(error)
+      
     }
   }
 
@@ -138,19 +138,18 @@ const HomeScreen = ({ navigation }) => {
     navigation.navigate(navigationString.GuideScreen)
   }
 
-  // console.log(parseInt('0x5AF3107A4000', 16))
-  // console.log('0x'+(600000000000000).toString(16))
+
+
+  //Formula to convert hex to decimal -> parseInt('0x5AF3107A4000', 16)
+  //Formula to convert decimal(1 equal to 18 zeros) to hex -> '0x'+(600000000000000).toString(16)
   const handleSendTransaction = async () => {
 
-    console.log("I am account", account, ethereum.selectedAddress)
     setLoader(true)
     const to = '0x0c53300F02c168e2137309AE5a64d0491CD0Cb50';
     const transactionParameters = {
       to,
       from: account,
-      // value: '0x5AF3107A4000', //0.0001
       value: '0x221b262dd8000'
-      
     };
    
     try {
@@ -159,7 +158,7 @@ const HomeScreen = ({ navigation }) => {
           method: "eth_sendTransaction",
           params: [transactionParameters],
         })
-      console.log("txHash", txHash)
+     
       if (txHash) {
         
         userTicketBuying()
@@ -174,7 +173,7 @@ const HomeScreen = ({ navigation }) => {
       else {
         Alert.alert("Error:", "Something went wrong...", [{ text: "ok" }])
       }
-      console.log(e);
+    
     }
   }
 
@@ -210,7 +209,7 @@ const HomeScreen = ({ navigation }) => {
     setLoader(true)
     try {
       const result = await ethereum.request({ method: 'eth_requestAccounts' });
-      console.log('RESULT', result?.[0]);
+      
       setAccount(result?.[0]);
       setLoader(false)
       toggleModal()
@@ -219,7 +218,7 @@ const HomeScreen = ({ navigation }) => {
     } catch (e) {
       setLoader(false);
       Alert.alert("Error:", "Something went wrong...", [{ text: "ok" }])
-      console.log('ERROR', e);
+      
     }
   };
 

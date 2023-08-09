@@ -48,7 +48,7 @@ const TicketInfoScreen = ({ navigation }) => {
       let userToken = await AsyncStorage.getItem('userToken');
 
       let result = await axios.get(`${baseURL}/api/user/${userToken}`)
-      // console.log(result.data)
+     
       if (result.status == 200) {
         setData(result.data.user)
         setUserData(result.data.user)
@@ -78,7 +78,7 @@ const TicketInfoScreen = ({ navigation }) => {
           text: 'Refresh',
           onPress: () => { getDatafromApi() }
         }])
-      console.log(error)
+      
     }
   }
 
@@ -87,9 +87,9 @@ const TicketInfoScreen = ({ navigation }) => {
     try {
       let result = await axios.get(`${baseURL}/api/user_ticket/get_current_and_previous_tickets/${session}/${userId}`,)
 
-      console.log(result.status, session, userId)
+     
       if (result.status == 200) {
-        console.log(result.data)
+        
         setCurrentTickets(result?.data?.current_tickets)
         setPreviousTickets(result?.data?.previous_tickets)
         setLoader(false)
@@ -117,7 +117,7 @@ const TicketInfoScreen = ({ navigation }) => {
           text: 'Refresh',
           onPress: () => { getDatafromApi() }
         }])
-      console.log(error)
+      
     }
 
 
@@ -127,7 +127,7 @@ const TicketInfoScreen = ({ navigation }) => {
 
   useEffect(() => {
     if (currentSession) {
-      console.log(currentSession)
+      
       getLotteryEndTime(currentSession)
       setInterval(() => {
         getLotteryEndTime(currentSession)
@@ -176,7 +176,7 @@ const TicketInfoScreen = ({ navigation }) => {
 
       if(!result?.data?.error){
         setCheckWinningLoader(false)
-        console.log("Result", result?.data)
+        
         navigation.navigate(navigationString.ResultScreen,{
           data: result?.data?.error_msg || result?.data?.success_msg
         })
@@ -195,7 +195,7 @@ const TicketInfoScreen = ({ navigation }) => {
       [{
         text: "Go Back",
       },])
-      console.log(error)
+      
     }
   }
 

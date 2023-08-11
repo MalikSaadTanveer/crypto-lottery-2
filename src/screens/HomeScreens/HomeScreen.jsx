@@ -14,6 +14,7 @@ import ButtonComponent from '../../components/ButtonComponent';
 import navigationString from '../../utils/navigationString';
 // import Modal from "react-native-modal";
 import ModalCoinbase from '../../components/ModalCoinbase';
+import ModalBuyTicket from '../../components/ModalBuyTicket';
 import infoImage from '../../../assets/icons/info.png'
 import nextImage from '../../../assets/icons/next.png'
 import HomeLotteryStatusComp from '../../components/HomeLotteryStatusComp';
@@ -36,15 +37,23 @@ import {
 const HomeScreen = ({ navigation }) => {
   const { signOut, account, setAccount, currentSession, setCurrentSession } = useContext(AuthContext)
   const [isModalVisible, setModalVisible] = useState(false);
+  const [isModalBuyVisible, setModalBuyVisible] = useState(false);
   const [loader, setLoader] = useState(false)
   const [full_name, setFull_name] = useState('Loading...')
   const [endTime, setEndTime] = useState('...')
   const [ethereum, setEthereum] = useState(null)
+  const [numberOfTickets,setNumberOfTickets] = useState('1')
   useEffect(() => {
     getEthreumSDK()
     getName()
     getCurrentSession()
   }, [])
+
+  useEffect(()=>{ 
+    if(numberOfTickets == ''){
+      setNumberOfTickets('1')
+    }
+  },[numberOfTickets])
 
   const getEthreumSDK = () => {
     const sdk = new MetaMaskSDK({
@@ -145,11 +154,13 @@ const HomeScreen = ({ navigation }) => {
   const handleSendTransaction = async () => {
 
     setLoader(true)
-    const to = '0x0c53300F02c168e2137309AE5a64d0491CD0Cb50';
+    const to = '0xBb2Eb22F3Ba38A4552b9Abb14A55356896425591';
+    const price = '0x'+(600000000000000 * parseInt(numberOfTickets)).toString(16)
     const transactionParameters = {
       to,
       from: account,
-      value: '0x221b262dd8000'
+      // value: '0x221b262dd8000'
+      value: price
     };
    
     try {
@@ -184,7 +195,8 @@ const HomeScreen = ({ navigation }) => {
 
       let result = await axios.post(`${baseURL}/api/user_ticket/create_user_ticket`, {
         "session": currentSession?._id,
-        "user": userToken
+        "user": userToken,
+        ticketQty:parseInt(numberOfTickets)
       })
 
       if (!result?.data?.error) {
@@ -195,8 +207,9 @@ const HomeScreen = ({ navigation }) => {
         setLoader(false)
         Alert.alert("Error:", "Something went wrong...", [{ text: "ok" }])
       }
-
+     
     } catch (error) {
+      setModalBuyVisible(false)
       setLoader(false)
       Alert.alert("Error:", "Something went wrong...", [{ text: "ok" }])
     }
@@ -239,7 +252,9 @@ const HomeScreen = ({ navigation }) => {
 
         <TicketButton
           buttonIcon={buyTicket}
-          buttonPress={account ? handleSendTransaction : toggleModal}
+          buttonPress={()=>account ? setModalBuyVisible(true) 
+            // handleSendTransaction 
+            : toggleModal()}
         />
 
         <View style={styles.textsContainer}>
@@ -287,6 +302,15 @@ const HomeScreen = ({ navigation }) => {
         loader={loader}
 
       />
+      <ModalBuyTicket
+        isModalVisible={isModalBuyVisible}
+        setModalVisible={setModalBuyVisible}
+        handleSubmit={handleSendTransaction}
+        setNumberOfTickets={setNumberOfTickets}
+        numberOfTickets={numberOfTickets}
+        loader={loader}
+      />
+
     </ScreensLayout>
   )
 }

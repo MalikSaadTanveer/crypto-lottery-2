@@ -176,7 +176,7 @@ const TicketInfoScreen = ({ navigation }) => {
 
       if(!result?.data?.error){
         setCheckWinningLoader(false)
-        
+        console.log("Result Data ", result?.data)
         navigation.navigate(navigationString.ResultScreen,{
           data: result?.data?.error_msg || result?.data?.success_msg
         })

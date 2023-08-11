@@ -93,7 +93,7 @@ const TicketInfoLotteryStatus = ({userData, currentTickets, previousTickets, ses
 
           {/* <Text style={styles.middleText}>Prize Pot</Text> */}
           <View style={styles.amountContainer}>
-            <Text style={styles.amount1} numberOfLines={1}>{ currentTickets?.length>0 ? currentTickets?.map((item) => `#${item?.ticket?.number} ` ) : "No Ticket Found" } </Text>
+            <Text style={styles.amount1} numberOfLines={3}>{ currentTickets?.length>0 ? currentTickets?.map((item) => `#${item?.ticket?.number} ` ) : "No Ticket Found" } </Text>
             <Text style={styles.amount2}>Current Tickets</Text>
           </View>
 
@@ -185,7 +185,8 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontFamily: fonts.UbuntuBold,
     lineHeight: 27,
-    marginBottom: 4
+    marginBottom: 4,
+    paddingHorizontal:12
   },
   amount2: {
     color: colors.dark,

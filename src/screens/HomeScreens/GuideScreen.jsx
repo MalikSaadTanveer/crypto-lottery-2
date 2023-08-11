@@ -48,17 +48,17 @@ const GuideScreen = ({ navigation }) => {
               <GuideStepBox
                 step="Step 1"
                 title="Buy Tickets"
-                desc="Lorem ipsum dolor sit amet consectetur. Sed morbi aliquam consequat luctus dolor pulvinar."
+                desc="Buy tickets Buy your luck number connecting your wallet to the meta mask. Tickets numbers will be generated randomly by the system."
               />
               <GuideStepBox
                 step="Step 2"
                 title="Wait for the Draw"
-                desc="Lorem ipsum dolor sit amet consectetur. Commodo malesuada eget facilisi praesent rhoncus amet."
+                desc="Wait for the draw A winner will be randomly picked every 24h."
               />
               <GuideStepBox
                 step="Step 3"
                 title="Check for Prizes"
-                desc="Lorem ipsum dolor sit amet consectetur. Sed morbi aliquam consequat luctus dolor pulvinar."
+                desc="Check for the prizes As more users play the pot grows. 10% of the winning will be deducted for admin."
               />
             </View>
             <View style={styles.hr} />

@@ -63,13 +63,7 @@ const GuideScreen = ({ navigation }) => {
             </View>
             <View style={styles.hr} />
 
-            <WinningCriteria />
-
-            <View style={styles.hr} />
-
-            <PrizeFundComp />
-
-            <View style={styles.hr} />
+           
 
 
             <View style={styles.footer} >

@@ -56,7 +56,6 @@ const HomeScreen = ({ navigation }) => {
       timer: BackgroundTimer,
       dappMetadata: {
         name: 'Crypto_Lottery_App',
-        // url: 'https://goerli.infura.io/v3/2ddacf7ad8c84db58157e98d8842999b',  //very Important .. it must be correct.
         url: 'https://mainnet.infura.io/v3/2ddacf7ad8c84db58157e98d8842999b',  
       },
     });
@@ -75,7 +74,6 @@ const HomeScreen = ({ navigation }) => {
       const result = await axios.get(`${baseURL}/api/session/get_current_session`);
 
       if (result.status == 200) {
-        console.log(result.data)
         setCurrentSession(result?.data?.session[0])
         setUnsoldTickets(result?.data?.unsoldTickets)
       }
@@ -89,7 +87,6 @@ const HomeScreen = ({ navigation }) => {
       }
 
     } catch (error) {
-      console.log(error)
       Alert.alert("Error:", "Something went wrong",
         [{
           text: "Ok",
@@ -164,7 +161,6 @@ const HomeScreen = ({ navigation }) => {
     const transactionParameters = {
       to,
       from: account,
-      // value: '0x221b262dd8000'
       value: price
     };
 
@@ -198,13 +194,11 @@ const HomeScreen = ({ navigation }) => {
       setLoader(true)
       let userToken = await AsyncStorage.getItem('userToken');
       let result01 = await axios.put(`${baseURL}/api/user/${userToken}`, {wallet_address:account})
-      console.log("I am result01",result01.data)
       let result = await axios.post(`${baseURL}/api/user_ticket/create_user_ticket`, {
         "session": currentSession?._id,
         "user": userToken,
         ticketQty: parseInt(numberOfTickets)
       })
-      console.log("Buying",result.data)
       if (!result?.data?.error) {
         setLoader(false)
         getCurrentSession()
@@ -222,8 +216,6 @@ const HomeScreen = ({ navigation }) => {
     }
   }
 
-
-  //https://stackoverflow.com/questions/76540520/why-does-metamask-sdk-for-react-native-doesnt-make-wallet-connection-persistent
 
   const walletConnect = async () => {
     setLoader(true)

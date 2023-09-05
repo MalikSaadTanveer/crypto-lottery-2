@@ -208,13 +208,13 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         marginVertical: 20,
-        paddingHorizontal: 10, // Added paddingHorizontal
+        paddingHorizontal: 10, 
     },
     additionalButton: {
-        backgroundColor: 'rgba(95, 95, 243, 1)', // Light blue color
+        backgroundColor: 'rgba(95, 95, 243, 1)', 
         width:60,
         height:60,
-        borderRadius: 50, // Circular buttons
+        borderRadius: 50, 
         alignItems: 'center',
         justifyContent: 'center',
         width: 60,
@@ -235,7 +235,7 @@ const styles = StyleSheet.create({
         marginBottom: 20,
         color: '#333',
         backgroundColor:'rgba(0, 0, 0, 0.04)',
-        paddingHorizontal: 20, // Added paddingHorizontal
+        paddingHorizontal: 20, 
     },
     buttonContainer: {
         paddingHorizontal: 20,

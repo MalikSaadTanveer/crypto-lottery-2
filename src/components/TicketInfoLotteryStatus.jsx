@@ -5,36 +5,7 @@ import fonts from '../utils/fonts'
 
 const TicketInfoLotteryStatus = ({userData, currentTickets, previousTickets, sessionId, endTime}) => {
  
-  // const data = [
-  //   {
-  //     matchType: 'Ticket #120',
-  //     winningAmount: 'LOSS',
-  //   },
-  //   {
-  //       matchType: 'Ticket #121',
-  //       winningAmount: 'WIN',
-  //   },
-  //   {
-  //       matchType: 'Ticket #122',
-  //       winningAmount: 'WIN',
-  //   },
-  //   {
-  //       matchType: 'Ticket #123',
-  //       winningAmount: 'LOSS',
-  //   },
-  //   {
-  //       matchType: 'Ticket #124',
-  //       winningAmount: 'LOSS',
-  //   },
-  //   {
-  //       matchType: 'Ticket #125',
-  //       winningAmount: 'WIN',
-  //   },
-  //   {
-  //       matchType: 'Ticket #126',
-  //       winningAmount: 'WIN',
-  //   },
-  // ]
+ 
 
   function formatString(input) {
     if (input.length <= 6) {

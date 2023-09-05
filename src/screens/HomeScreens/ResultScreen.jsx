@@ -103,7 +103,6 @@ const ResultScreen = ({ navigation, route }) => {
   }
 
 
-  // ToDO:
   const requestReward = async () => {
     try {
       let userToken = await AsyncStorage.getItem('userToken');
@@ -141,7 +140,7 @@ const ResultScreen = ({ navigation, route }) => {
 
       {
         winningStatus == "Hurray, You have won the lottery" ?
-        // true ?
+      
           <View style={styles.container}>
             <View style={styles.innerContainer} >
               <Text style={styles.title}>Winning Ticket</Text>
@@ -235,7 +234,5 @@ const styles = StyleSheet.create({
     height: 140,
     position: 'absolute',
     bottom: -30,
-    // backgroundColor:'red'
-    // top:100
   },
 })

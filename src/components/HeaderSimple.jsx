@@ -49,7 +49,6 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontFamily: fonts.UbuntuRegular,
         color: colors.light,
-        // marginTop: 6
     },
 
 })

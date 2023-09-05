@@ -8,22 +8,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import LoadingScreen from './src/screens/AuthScreens/LoadingScreen';
 import { MenuProvider } from 'react-native-popup-menu';
 
-// MetaMask
-// import MetaMaskSDK from '@metamask/sdk';
-// import {ethers} from 'ethers';
-// import BackgroundTimer from 'react-native-background-timer';
-  // const sdk = new MetaMaskSDK({
-  //   openDeeplink: link => {
-  //     Linking.openURL(link);
-  //   },
-  //   timer: BackgroundTimer,
-  //   dappMetadata: {
-  //     name: 'Crypto_Lottery_App',
-  //     url: 'https://goerli.infura.io/v3/2ddacf7ad8c84db58157e98d8842999b',  //very Important .. it must be correct.
-  //   },
-  // });
-  
-  // const ethereum = sdk.getProvider();
 
 const App = () => {
 
@@ -78,7 +62,6 @@ const App = () => {
           await AsyncStorage.setItem('userToken', userToken);
           await AsyncStorage.setItem('full_name', full_name);
         } catch (e) {
-          console.log(e);
         }
         dispatch({type: 'LOGIN', token: userToken});
       },
@@ -87,7 +70,6 @@ const App = () => {
           await AsyncStorage.removeItem('userToken');
           await AsyncStorage.removeItem('full_name');
         } catch (e) {
-          console.log(e);
         }
         dispatch({type: 'LOGOUT'});
       },
@@ -108,7 +90,6 @@ const App = () => {
       try {
         userToken = await AsyncStorage.getItem('userToken');
       } catch (e) {
-        console.log(e);
       }
       dispatch({type: 'RETRIEVE_TOKEN', token: userToken});
     }, 1000);

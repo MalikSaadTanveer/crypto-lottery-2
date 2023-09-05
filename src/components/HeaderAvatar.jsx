@@ -61,7 +61,6 @@ const styles = StyleSheet.create({
     left: {
         flexDirection: 'row',
         alignItems: 'center',
-        // width: '70%'
     },
     avatar: {
         width: 54,
@@ -113,8 +112,7 @@ const styles = StyleSheet.create({
         top: 50,
         left: 40,
         backgroundColor: 'white',
-        // paddingHorizontal: 30,
-        // paddingVertical: 4,
+     
         borderRadius: 5,
         color:colors.primary,
         

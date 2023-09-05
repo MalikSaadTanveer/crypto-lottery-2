@@ -3,8 +3,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import ScreensLayout from '../../layouts/ScreensLayout'
 import lotteryLogo from '../../../assets/images/lotteryLogo.png'
 import InputComponent from '../../components/InputComponent'
-// import usernameIcon from '../../../assets/icons/username.png'
-// import phIcon from '../../../assets/icons/ph.png'
+
 import emailIcon from '../../../assets/icons/email.png'
 import passwordIcon from '../../../assets/icons/password.png'
 import ButtonComponent from '../../components/ButtonComponent'
@@ -23,53 +22,7 @@ const LoginScreen = ({ navigation,route }) => {
   const { signIn } = useContext(AuthContext)
   
   const [otp, setOTP] = useState('')
-  // const [password, setPassword] = useState('')
-
-  
-
-  // const handleScreen = ()=>{
-  //   navigation.navigate(navigationString.SignupScreen)
-  // }
-
-  // const handleLogin = async ()=>{
-  
-  //   if(!email || !email.includes('@')){
-  //     Toast.show({ type: "error", text1: "Error:", text2: "Please add email correctly..."});
-  //     return
-  //   }
-  //   else if(!password || password.length<8){
-  //     Toast.show({ type: "error", text1: "Error:", text2: "Password should be 8 characters..."});
-  //     return
-  //   }
-    
-  //   setLoader(true)
-  //   try {
-      
-  //     let result = await axios.post(`${baseURL}/api/user/login`,{
-  //       email,
-  //       password
-  //     });
-
-  //     if(result?.data?.error){
-  //       setLoader(false)
-  //       Toast.show({ type: "error", text1: "Error:", text2: result?.data?.error_msg});
-  //       return
-  //     }
-      
-  //     setLoader(false)
-  //     signIn(result?.data?.response?._id,result?.data?.response?.full_name)
-    
-  //   } catch (error) {
-  //     setLoader(false)
-  //     Toast.show({ type: "error", text1: "Error:", text2: "Something went wrong..."});
-  //   }
-
-
-  // }
-
-  // const handleConfirmEmail = ()=>{
-  //   navigation.navigate(navigationString.NewPasswords)
-  // }
+ 
 
   useEffect(()=>{
     Toast.show({ type: "success", text1: "OTP Sent Successfully.:", text2: "Please check your email address..." });
@@ -96,17 +49,14 @@ const LoginScreen = ({ navigation,route }) => {
         return
       }
 
-      console.log(result?.data)
       setLoader(false)
       navigation.navigate(navigationString.NewPasswords, {
         userId: result?.data?.user_id
       })
-      // signIn(result?.data?.response?._id, result?.data?.response?.full_name)
 
     } catch (error) {
       setLoader(false)
       Toast.show({ type: "error", text1: "Error:", text2: "Something went wrong..." });
-      console.log(error)
     }
 
   }

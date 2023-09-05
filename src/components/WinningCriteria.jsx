@@ -32,8 +32,6 @@ const styles = StyleSheet.create({
     },
     title: {
         color: colors.secondary,
-        // marginTop: 10,
-        // marginTop: 10,
         fontSize: 18,
         fontFamily: fonts.UbuntuBold
     },

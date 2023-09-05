@@ -8,7 +8,7 @@ import {name as appName} from './app.json';
 
 import { LogBox } from 'react-native';
 
-LogBox.ignoreLogs(['new NativeEventEmitter']); // Ignore log notification by message
-LogBox.ignoreAllLogs(); //I
+LogBox.ignoreLogs(['new NativeEventEmitter']); 
+LogBox.ignoreAllLogs(); 
 
 AppRegistry.registerComponent(appName, () => App);

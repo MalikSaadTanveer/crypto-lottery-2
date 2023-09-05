@@ -166,7 +166,6 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap'
   },
   matchItem: {
-    // width:'50%',
     marginBottom: 22,
     alignItems:'flex-start'
   },

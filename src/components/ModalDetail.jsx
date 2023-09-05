@@ -15,47 +15,19 @@ import LoaderComponent from './LoaderComponent'
 
 const screenHeight = Dimensions.get('screen').height
 const ModalDetail = ({ isModalVisible, setModalVisible, account, email, setEmail, phone, setPhone, handleSubmit, loader }) => {
-    const [emailEnabled, setEmailEnabled] = useState(false)
-    const [phEnabled, setPhEnabled] = useState(false)
-    const [addrEnabled, setaddrEnabled] = useState(false)
     const emailRef = useRef(null)
     const phRef = useRef(null)
     const addrRef = useRef(null)
     const scrollViewRef = useRef(null)
 
     const handleEmailEditable = () => {
-
         emailRef.current.focus()
-        // if(emailEnabled){
-        //     emailRef.current.blur()
-        // }
-        // else{
-        //     emailRef.current.focus()
-        // }
-        // setEmailEnabled(!emailEnabled)
     }
 
     const handlePhEditable = () => {
         phRef.current.focus()
-        // if(phEnabled){
-        //     phRef.current.blur()
-        // }
-        // else{
-        //     phRef.current.focus()
-        // }
-        // setPhEnabled(!phEnabled)
     }
 
-    const handleAddrEditable = () => {
-        addrRef.current.focus()
-        // if(addrEnabled){
-        //     addrRef.current.blur()
-        // }
-        // else{
-        //     addrRef.current.focus()
-        // }
-        // setaddrEnabled(!addrEnabled)
-    }
 
     const handleScrollTo = p => {
         if (this.scrollViewRef.current) {
@@ -111,7 +83,7 @@ const ModalDetail = ({ isModalVisible, setModalVisible, account, email, setEmail
                                     style={styles.itemTextInput}
                                     cursorColor={colors.dark}
                                     keyboardType='email-address'
-                                // editable={emailEnabled}
+                                
                                 />
                             </View>
                             <TouchableHighlight onPress={handleEmailEditable} activeOpacity={0.6} underlayColor={'transparent'}
@@ -137,7 +109,7 @@ const ModalDetail = ({ isModalVisible, setModalVisible, account, email, setEmail
                                     style={styles.itemTextInput}
                                     cursorColor={colors.dark}
                                     keyboardType='phone-pad'
-                                // editable={phEnabled}
+                            
                                 />
                             </View>
                             <TouchableHighlight onPress={handlePhEditable} activeOpacity={0.6} underlayColor={'transparent'}
@@ -156,19 +128,15 @@ const ModalDetail = ({ isModalVisible, setModalVisible, account, email, setEmail
                                 <Text style={styles.itemTitle}>ID Address</Text>
                                 <TextInput
                                     ref={addrRef}
-                                    value={account}
+                                    value={account?.substring(0,5)+"..."}
                                     placeholder='0x23...'
                                     placeholderTextColor={colors.dark}
                                     style={styles.itemTextInput}
                                     cursorColor={colors.dark}
                                     editable={false}
-                                // editable={addrEnabled}
                                 />
                             </View>
-                            {/* <TouchableHighlight onPress={handleAddrEditable} activeOpacity={0.6} underlayColor={'transparent'}
-                            style={styles.leftIconContainer}>
-                            <Image source={edit} style={styles.leftIcon} resizeMode='contain' />
-                        </TouchableHighlight> */}
+                         
                         </View>
                     </View>
 

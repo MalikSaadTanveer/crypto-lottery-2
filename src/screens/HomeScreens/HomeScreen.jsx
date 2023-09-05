@@ -12,7 +12,6 @@ import { colors } from '../../utils/colors';
 import fonts from '../../utils/fonts';
 import ButtonComponent from '../../components/ButtonComponent';
 import navigationString from '../../utils/navigationString';
-// import Modal from "react-native-modal";
 import ModalCoinbase from '../../components/ModalCoinbase';
 import ModalBuyTicket from '../../components/ModalBuyTicket';
 import infoImage from '../../../assets/icons/info.png'
@@ -24,36 +23,30 @@ import BackgroundTimer from 'react-native-background-timer';
 import axios from 'axios';
 import { baseURL } from '../../utils/baseURL';
 
-import {
-  Menu,
-  MenuOptions,
-  MenuOption,
-  MenuTrigger,
-} from 'react-native-popup-menu';
 
-
-
+ 
 
 const HomeScreen = ({ navigation }) => {
   const { signOut, account, setAccount, currentSession, setCurrentSession } = useContext(AuthContext)
+  const [unsoldTickets,setUnsoldTickets] = useState(0)
   const [isModalVisible, setModalVisible] = useState(false);
   const [isModalBuyVisible, setModalBuyVisible] = useState(false);
   const [loader, setLoader] = useState(false)
   const [full_name, setFull_name] = useState('Loading...')
   const [endTime, setEndTime] = useState('...')
   const [ethereum, setEthereum] = useState(null)
-  const [numberOfTickets,setNumberOfTickets] = useState('1')
+  const [numberOfTickets, setNumberOfTickets] = useState('1')
   useEffect(() => {
     getEthreumSDK()
     getName()
     getCurrentSession()
   }, [])
 
-  useEffect(()=>{ 
-    if(numberOfTickets == ''){
+  useEffect(() => {
+    if (numberOfTickets == '') {
       setNumberOfTickets('1')
     }
-  },[numberOfTickets])
+  }, [numberOfTickets])
 
   const getEthreumSDK = () => {
     const sdk = new MetaMaskSDK({
@@ -63,7 +56,8 @@ const HomeScreen = ({ navigation }) => {
       timer: BackgroundTimer,
       dappMetadata: {
         name: 'Crypto_Lottery_App',
-        url: 'https://goerli.infura.io/v3/2ddacf7ad8c84db58157e98d8842999b',  //very Important .. it must be correct.
+        // url: 'https://goerli.infura.io/v3/2ddacf7ad8c84db58157e98d8842999b',  //very Important .. it must be correct.
+        url: 'https://mainnet.infura.io/v3/2ddacf7ad8c84db58157e98d8842999b',  
       },
     });
 
@@ -72,34 +66,36 @@ const HomeScreen = ({ navigation }) => {
 
   const getName = async () => {
     let name = await AsyncStorage.getItem('full_name')
-    
+
     setFull_name(name)
   }
 
   const getCurrentSession = async () => {
     try {
       const result = await axios.get(`${baseURL}/api/session/get_current_session`);
-      
+
       if (result.status == 200) {
-        
+        console.log(result.data)
         setCurrentSession(result?.data?.session[0])
+        setUnsoldTickets(result?.data?.unsoldTickets)
       }
       else {
         Alert.alert("Error:", "Something went wrong",
           [{
             text: "Ok",
           },
-        ])
+          ])
 
       }
 
     } catch (error) {
+      console.log(error)
       Alert.alert("Error:", "Something went wrong",
         [{
           text: "Ok",
         },
         ])
-      
+
     }
   }
 
@@ -135,7 +131,7 @@ const HomeScreen = ({ navigation }) => {
   };
 
   const handleLogout = () => {
-    
+
     signOut()
   }
 
@@ -152,26 +148,35 @@ const HomeScreen = ({ navigation }) => {
   //Formula to convert hex to decimal -> parseInt('0x5AF3107A4000', 16)
   //Formula to convert decimal(1 equal to 18 zeros) to hex -> '0x'+(600000000000000).toString(16)
   const handleSendTransaction = async () => {
+    
+    if(unsoldTickets == 0){
+      Alert.alert("Warning", `Sorry, no tickets are remaining, Please wait for the next round.`, [{ text: "ok" }])
+      return
+    }
+    else if(unsoldTickets < numberOfTickets){
+      Alert.alert("Warning", `We have only ${unsoldTickets} tickets remaining that you can buy...`, [{ text: "ok" }])
+      return
+    }
 
     setLoader(true)
     const to = '0xBb2Eb22F3Ba38A4552b9Abb14A55356896425591';
-    const price = '0x'+(600000000000000 * parseInt(numberOfTickets)).toString(16)
+    const price = '0x' + (600000000000000 * parseInt(numberOfTickets)).toString(16)
     const transactionParameters = {
       to,
       from: account,
       // value: '0x221b262dd8000'
       value: price
     };
-   
+
     try {
       const txHash = await ethereum.request(
         {
           method: "eth_sendTransaction",
           params: [transactionParameters],
         })
-     
+
       if (txHash) {
-        
+
         userTicketBuying()
       }
       else {
@@ -184,7 +189,7 @@ const HomeScreen = ({ navigation }) => {
       else {
         Alert.alert("Error:", "Something went wrong...", [{ text: "ok" }])
       }
-    
+
     }
   }
 
@@ -192,22 +197,24 @@ const HomeScreen = ({ navigation }) => {
     try {
       setLoader(true)
       let userToken = await AsyncStorage.getItem('userToken');
-
+      let result01 = await axios.put(`${baseURL}/api/user/${userToken}`, {wallet_address:account})
+      console.log("I am result01",result01.data)
       let result = await axios.post(`${baseURL}/api/user_ticket/create_user_ticket`, {
         "session": currentSession?._id,
         "user": userToken,
-        ticketQty:parseInt(numberOfTickets)
+        ticketQty: parseInt(numberOfTickets)
       })
-
+      console.log("Buying",result.data)
       if (!result?.data?.error) {
         setLoader(false)
+        getCurrentSession()
         Alert.alert("Success:", "Payment confirm Successfully...", [{ text: "ok" }])
       }
       else {
         setLoader(false)
         Alert.alert("Error:", "Something went wrong...", [{ text: "ok" }])
       }
-     
+
     } catch (error) {
       setModalBuyVisible(false)
       setLoader(false)
@@ -217,21 +224,21 @@ const HomeScreen = ({ navigation }) => {
 
 
   //https://stackoverflow.com/questions/76540520/why-does-metamask-sdk-for-react-native-doesnt-make-wallet-connection-persistent
-  
+
   const walletConnect = async () => {
     setLoader(true)
     try {
       const result = await ethereum.request({ method: 'eth_requestAccounts' });
-      
+
       setAccount(result?.[0]);
       setLoader(false)
       toggleModal()
-      
+
       Alert.alert("Success:", "Wallet Connected Successfully...", [{ text: "ok" }])
     } catch (e) {
       setLoader(false);
       Alert.alert("Error:", "Something went wrong...", [{ text: "ok" }])
-      
+
     }
   };
 
@@ -240,10 +247,10 @@ const HomeScreen = ({ navigation }) => {
       <View style={styles.container}>
 
         <HeaderAvatar
-              avatar={avatar}
-              name={full_name}
-              handleLogout={handleLogout}
-            />
+          avatar={avatar}
+          name={full_name}
+          handleLogout={handleLogout}
+        />
 
         <AmountComponent
           amount={currentSession?.total_reward?.['$numberDecimal'] || 0}
@@ -252,8 +259,7 @@ const HomeScreen = ({ navigation }) => {
 
         <TicketButton
           buttonIcon={buyTicket}
-          buttonPress={()=>account ? setModalBuyVisible(true) 
-            // handleSendTransaction 
+          buttonPress={() => account ? setModalBuyVisible(true)
             : toggleModal()}
         />
 
@@ -261,13 +267,12 @@ const HomeScreen = ({ navigation }) => {
           <Text style={styles.text1}>Get your tickets now!</Text>
           <Text style={styles.text2}>
             <Text style={{ color: colors.golden }} >
-              {/* 1d 3h 13m  */}
               {endTime} </Text>until the draw</Text>
         </View>
 
 
-        <HomeLotteryStatusComp 
-          sessionId={currentSession?._id }
+        <HomeLotteryStatusComp
+          sessionId={currentSession?._id}
           endTime={currentSession?.end_date}
         />
 
@@ -290,10 +295,7 @@ const HomeScreen = ({ navigation }) => {
             <Image source={nextImage} style={styles.nextImage} resizeMode='contain' />
           </>
         </TouchableHighlight>
-
-
       </View>
-      {/* <Button title={"Logout"} onPress={handleLogout} /> */}
 
       <ModalCoinbase
         isModalVisible={isModalVisible}

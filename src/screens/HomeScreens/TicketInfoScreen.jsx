@@ -172,13 +172,15 @@ const TicketInfoScreen = ({ navigation }) => {
     try {
       setCheckWinningLoader(true)
       let userToken = await AsyncStorage.getItem('userToken')
-      let result = await axios.get(`${baseURL}/api/user_ticket/check_winning/${currentSession?._id}/${userToken}`)
+      // let result = await axios.get(`${baseURL}/api/user_ticket/check_winning/${currentSession?._id}/${userToken}`)
+      let result = await axios.get(`${baseURL}/api/user_ticket/check_winning/${userToken}/${currentSession?._id}`)
 
       if(!result?.data?.error){
         setCheckWinningLoader(false)
         console.log("Result Data ", result?.data)
         navigation.navigate(navigationString.ResultScreen,{
-          data: result?.data?.error_msg || result?.data?.success_msg
+          message: result?.data?.error_msg || result?.data?.success_msg,
+          data: result?.data?.success_msg ? result.data?.response : null
         })
       }
       else{

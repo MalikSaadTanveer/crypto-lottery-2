@@ -58,18 +58,16 @@ const LoaderLotteryStatus = () => {
 
             <View style={styles.matchesContainer} >
 
-              {
+              {/* {
                 data.length > 0 &&
                 data.map((item, index) => (
                   <View style={{...styles.matchItem, width:index % 2 == 0 ? '60%':'30%'}} key={index}>
-                    {/* <Text style={styles.matchType}>{item.matchType}</Text> */}
-                    {/* <Text style={styles.winningAmount}>{item.winningAmount}</Text> */}
                     <Text style={styles.matchType}>Loading...</Text>
                     <ActivityIndicator style={styles.winningAmount} color={colors.primary} size={'large'} />
 
                   </View>
                 ))
-              }
+              } */}
 
             </View>
 

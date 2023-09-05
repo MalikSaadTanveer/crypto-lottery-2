@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Image, TouchableHighlight } from 'react-native'
+import { StyleSheet, Text, View, Image,Linking, Alert } from 'react-native'
 import React from 'react'
 import fonts from '../utils/fonts'
 import { colors } from '../utils/colors'
@@ -11,6 +11,15 @@ import {
     MenuTrigger,
 } from 'react-native-popup-menu';
 const HeaderAvatar = ({ avatar, name, handleLogout }) => {
+
+    const privacyPolicyLink = () => {
+        const url = 'https://crypto-lottery-win.blogspot.com/p/privacy-policy-of-crypto-lottery.html'; // Replace with the URL you want to open
+        Linking.openURL(url)
+          .catch(error => {
+            Alert.alert("Error","Something went wrong...")
+          });
+      };
+
     return (
         <View style={styles.container}>
             <Menu style={styles.menu}>
@@ -21,6 +30,9 @@ const HeaderAvatar = ({ avatar, name, handleLogout }) => {
                     </View>
                 </MenuTrigger>
                 <MenuOptions style={styles.menuOptions}>
+                    <MenuOption  onSelect={() => privacyPolicyLink()}  >
+                        <Text style={styles.singleMenuOption}>PRIVICY POLICY</Text>
+                    </MenuOption>
                     <MenuOption  onSelect={() => handleLogout()}  >
                         <Text style={styles.singleMenuOption}>LOG OUT</Text>
                     </MenuOption>
@@ -32,14 +44,7 @@ const HeaderAvatar = ({ avatar, name, handleLogout }) => {
             </Menu>
 
 
-            {/* <View style={styles.right}>
-                <TouchableHighlight onPress={()=>{}} activeOpacity={0.8} underlayColor={'transparent'} 
-                    style={styles.notificationContainer}>
-                    <View style={styles.notificationImageContainer}>
-                        <Image source={notificationImage} style={styles.notificationImage} resizeMode='contain' />
-                    </View>
-                </TouchableHighlight>
-            </View> */}
+           
         </View>
     )
 }
@@ -108,8 +113,8 @@ const styles = StyleSheet.create({
         top: 50,
         left: 40,
         backgroundColor: 'white',
-        paddingHorizontal: 30,
-        paddingVertical: 4,
+        // paddingHorizontal: 30,
+        // paddingVertical: 4,
         borderRadius: 5,
         color:colors.primary,
         
@@ -117,6 +122,11 @@ const styles = StyleSheet.create({
     singleMenuOption: {
         color:colors.primary,
         fontSize:14,
-        fontFamily:fonts.UbuntuBold
+        fontFamily:fonts.UbuntuBold,
+        borderBottomColor:'lightgrey',
+        borderBottomWidth:0.5,
+        paddingLeft:10,
+        paddingRight:30,
+        paddingVertical:10
     }
 })

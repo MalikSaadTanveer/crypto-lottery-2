@@ -31,7 +31,8 @@ const ResultScreen = ({ navigation, route }) => {
   const [email, setEmail] = useState(userData?.email);
   const [phone, setPhone] = useState(userData?.phone);
   const [loader, setLoader] = useState(false)
-  const winningStatus = route?.params?.data
+  const winningStatus = route?.params?.message
+  const tokenData = route?.params?.data
 
   const openModal = () => {
     setEmail(userData?.email)
@@ -73,7 +74,7 @@ const ResultScreen = ({ navigation, route }) => {
       return
     }
 
-    requesReward()
+    requestReward()
 
   }
 
@@ -86,7 +87,7 @@ const ResultScreen = ({ navigation, route }) => {
       })
 
       if (result.status == 200) {
-        requesReward()
+        requestReward()
       }
       else {
         setLoader(false)
@@ -103,10 +104,10 @@ const ResultScreen = ({ navigation, route }) => {
 
 
   // ToDO:
-  const requesReward = async () => {
+  const requestReward = async () => {
     try {
       let userToken = await AsyncStorage.getItem('userToken');
-      let result = await axios.put(`${baseURL}/api/user_ticket/request_reward/64bfd5145259eb63375e5465`)
+      let result = await axios.put(`${baseURL}/api/user_ticket/request_reward/${tokenData?.ticket?._id}`)
 
       if (result.status == 200) {
         Toast.show({ type: "success", text1: "Success:", text2: "Reward requested successfully..." });
@@ -146,7 +147,7 @@ const ResultScreen = ({ navigation, route }) => {
               <Text style={styles.title}>Winning Ticket</Text>
               <Image source={winningImage} style={styles.stars} resizeMode='contain' />
             </View>
-            <Text style={styles.amount}>Ticket #23</Text>
+            <Text style={styles.amount}>Ticket #{tokenData?.ticket?.number}</Text>
             <TicketButton
               buttonIcon={RedeemTicket}
               buttonPress={openModal}
@@ -161,6 +162,7 @@ const ResultScreen = ({ navigation, route }) => {
               <Image source={winningImage} style={styles.stars} resizeMode='contain' />
             </View>
             <Text style={styles.amount}>Try Again</Text>
+            <Text style={styles.title}>{winningStatus}</Text>
             <ButtonComponent
               text="Back"
               color={colors.secondary}
@@ -225,7 +227,7 @@ const styles = StyleSheet.create({
   amount: {
     fontSize: 50,
     color: colors.light,
-    marginBottom: 30,
+    marginBottom: 10,
     fontFamily: fonts.UbuntuBold
   },
   stars: {
